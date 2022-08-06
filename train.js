@@ -3,6 +3,7 @@ class train extends Phaser.Scene{
     super("train")
   }
   create(){
+    localStorage.setItem("location", "train")
     this.sound.stopAll();
     this.sound.play("Spagetti", {loop: true, volume: .5});
     this.sound.play("train", {loop: true});

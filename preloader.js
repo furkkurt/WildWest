@@ -3,6 +3,7 @@ class preloader extends Phaser.Scene {
     super("boot");
   };
   preload(){
+		this.add.text(225, 150, "Loading...", {fontFamily: "litebulb", fontSize: "72px"});
 		this.load.spritesheet("sheet", "assets/sheet.png", {frameWidth: 70, frameHeight: 70});
 		this.load.image("ui", "/assets/mapSelector.png");
 		this.load.image("bg", "/assets/BG.png");
@@ -145,6 +146,8 @@ class preloader extends Phaser.Scene {
 		this.load.audio("crickets", "assets/audio/crickets.mp3");
 		this.load.image("dirt", "assets/dirt.png");
 		this.load.image("bridge", "assets/bridge.png");
+		this.load.audio("ending1", "assets/audio/ending1.mp3");
+		this.load.audio("ending2", "assets/audio/ending2.mp3");
 		//new guys
 		this.load.atlas("blackHat", "assets/blackHat.png", "assets/blackHat.json");
 		this.load.atlas("greenGuy", "assets/greenGuy.png", "assets/greenGuy.json");
@@ -155,6 +158,7 @@ class preloader extends Phaser.Scene {
 		this.load.image("blackHatWanted", "assets/blackHatWanted.png");
 		this.load.atlas("darkHorse", "assets/darkHorse.png", "assets/darkHorse.json");
 		this.load.atlas("darkishHorse", "assets/darkishHorse.png", "assets/darkishHorse.json");
+		this.load.audio("loneRanger", "assets/audio/loneRanger.mp3");
 		this.load.atlas("mom", "assets/mom.png", "assets/mom.json");
 		this.load.image("momOld", "assets/momOld.png");
 		this.load.atlas("manco", "assets/manco.png", "assets/manco.json");
@@ -335,7 +339,7 @@ class preloader extends Phaser.Scene {
 			frames: [{key:"branPunch",frame:"1"},{key:"branPunch",frame:"2"}],
 			repeat: 0
 		});
-		/*
+		
 		if(localStorage.getItem("location") == "map1")
 			this.scene.start("map1");
 		else if(localStorage.getItem("location") == "map2")
@@ -352,11 +356,15 @@ class preloader extends Phaser.Scene {
 			this.scene.start("horseRace");
 		else if(localStorage.getItem("location") == "duello")
 			this.scene.start("duello");
-		else if(localStorage.getItem("location") == "chase")
+		if(localStorage.getItem("location") == "ridersChase")
 			this.scene.start("ridersChase");
+		else if(localStorage.getItem("location") == "mancoDuel")
+			this.scene.start("mancoDuel");
+		else if(localStorage.getItem("location") == "train")
+			this.scene.start("train");
+		else if(localStorage.getItem("location") == "bridge")
+			this.scene.start("bridge1");
 		else
-			this.scene.start("prologue");
-			*/
-		this.scene.start("bridge3");
+			this.scene.start("town");
 	}
 }
