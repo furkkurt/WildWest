@@ -8,7 +8,7 @@ var config = {
   physics: {
     default: "arcade",
     arcade: {
-      debug: false
+      debug: true
     }
   },
   scene: [preloader, town, horseRace, bottleShootin, duello, tavern, blackjack, barn, mapSelector, map1, map2, scoreboard, preRidersChase, ridersChase, mancoDuel, preTrain, preTrain2, train, seqTrain, preBridge, preBridge2, bridge1, bridge2, bridge3, prologue, prologue2, prologue3, prologue4, ending1, ending2],
