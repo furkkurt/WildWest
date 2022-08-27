@@ -3,11 +3,16 @@ class preloader extends Phaser.Scene {
     super("boot");
   };
   preload(){
+		this.add.text(225, 150, "Loading...", {fontFamily: "litebulb", fontSize: "72px"});
 		this.load.spritesheet("sheet", "assets/sheet.png", {frameWidth: 70, frameHeight: 70});
 		this.load.image("ui", "/assets/mapSelector.png");
 		this.load.image("bg", "/assets/BG.png");
     this.load.tilemapTiledJSON("map1", "assets/levels/map1.json");
     this.load.tilemapTiledJSON("map2", "assets/levels/map2.json");
+    this.load.tilemapTiledJSON("map3", "assets/levels/map3.json");
+    this.load.tilemapTiledJSON("map4", "assets/levels/map4.json");
+    this.load.tilemapTiledJSON("map5", "assets/levels/map5.json");
+    this.load.tilemapTiledJSON("map6", "assets/levels/map6.json");
 		this.load.image("tile", "/assets/sheet.png");
 		this.load.image("cross", "/assets/controller/cross.png");
 		this.load.image("hidden", "/assets/controller/hidden.png");
@@ -24,8 +29,6 @@ class preloader extends Phaser.Scene {
 		this.load.image("quoteBox", "assets/quote.png");
 		this.load.audio("Spagetti", "assets/audio/spagettiWestern.mp3");
 		this.load.audio("Tequila", "assets/audio/tequilaStarter.mp3");
-		this.load.image("map1", "assets/map1.png");
-		this.load.image("map2", "assets/map2.png");
 		this.load.image("bullet", "assets/bullet.png");
 		this.load.audio("shoot", "assets/audio/shoot.mp3");
 		this.load.audio("reload", "assets/audio/reload.mp3")
@@ -128,6 +131,7 @@ class preloader extends Phaser.Scene {
 		this.load.audio("fatherNo1", "assets/audio/father/no1.mp3");
 		this.load.audio("fatherDone", "assets/audio/father/nicely.mp3");
 		this.load.audio("fatherAhah", "assets/audio/father/ahah.mp3");
+		this.load.audio("fatherHuuh", "assets/audio/father/huuh.mp3");
 		this.load.audio("mom", "assets/audio/mom.mp3");
 		this.load.audio("branGoing", "assets/audio/bran/goingfriend.mp3");
 		this.load.audio("branKill", "assets/audio/bran/ikill.mp3");
@@ -145,6 +149,8 @@ class preloader extends Phaser.Scene {
 		this.load.audio("crickets", "assets/audio/crickets.mp3");
 		this.load.image("dirt", "assets/dirt.png");
 		this.load.image("bridge", "assets/bridge.png");
+		this.load.audio("ending1", "assets/audio/ending1.mp3");
+		this.load.audio("ending2", "assets/audio/ending2.mp3");
 		//new guys
 		this.load.atlas("blackHat", "assets/blackHat.png", "assets/blackHat.json");
 		this.load.atlas("greenGuy", "assets/greenGuy.png", "assets/greenGuy.json");
@@ -155,6 +161,7 @@ class preloader extends Phaser.Scene {
 		this.load.image("blackHatWanted", "assets/blackHatWanted.png");
 		this.load.atlas("darkHorse", "assets/darkHorse.png", "assets/darkHorse.json");
 		this.load.atlas("darkishHorse", "assets/darkishHorse.png", "assets/darkishHorse.json");
+		this.load.audio("loneRanger", "assets/audio/loneRanger.mp3");
 		this.load.atlas("mom", "assets/mom.png", "assets/mom.json");
 		this.load.image("momOld", "assets/momOld.png");
 		this.load.atlas("manco", "assets/manco.png", "assets/manco.json");
@@ -335,7 +342,7 @@ class preloader extends Phaser.Scene {
 			frames: [{key:"branPunch",frame:"1"},{key:"branPunch",frame:"2"}],
 			repeat: 0
 		});
-		/*
+		
 		if(localStorage.getItem("location") == "map1")
 			this.scene.start("map1");
 		else if(localStorage.getItem("location") == "map2")
@@ -352,11 +359,15 @@ class preloader extends Phaser.Scene {
 			this.scene.start("horseRace");
 		else if(localStorage.getItem("location") == "duello")
 			this.scene.start("duello");
-		else if(localStorage.getItem("location") == "chase")
+		if(localStorage.getItem("location") == "ridersChase")
 			this.scene.start("ridersChase");
+		else if(localStorage.getItem("location") == "mancoDuel")
+			this.scene.start("mancoDuel");
+		else if(localStorage.getItem("location") == "train")
+			this.scene.start("train");
+		else if(localStorage.getItem("location") == "bridge")
+			this.scene.start("seqTrain");
 		else
-			this.scene.start("prologue");
-			*/
-		this.scene.start("bridge3");
+			this.scene.start("town");
 	}
 }

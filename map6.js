@@ -1,27 +1,8 @@
-var gunDrawn = false;
-var mouse;
-var fired = false;
-var bulletNpcCollider;
-var bullet;
-var bullets = 6;
-var bulletText, reloadingText;
-var collidableLayer;
-var target;
-var targetSprite;
-var targetOnSight;
-var firstEnemyShot = false;
-var civilianKills = 0;
-var seconds = 0;
-var score;
-var rank;
-var baglama = true;
-var speed;
-var horse;
-class map1 extends Phaser.Scene {
+class map6 extends Phaser.Scene {
   constructor() {
-    super("map1");
+    super("map6");
   };
-  create() { 
+  create() {
     if(localStorage.getItem("hasHorse") == undefined){
       speed = 200;
       horse = "";
@@ -43,14 +24,14 @@ class map1 extends Phaser.Scene {
 		bullets = 6;
 		gunDrawn = false; 
     fired = false;
-		mouse = this.input.activePointer;
+    mouse = this.input.activePointer;
     this.emitter = EventDispatcher.getInstance();
     this.gamePad = new GamePad({
       scene: this
     });
     this.textBox = this.physics.add.sprite(540, 375, "quoteBox").setScale(12.2).setDepth(99).setScrollFactor(0).setInteractive().setVisible(false);
     this.textBox.alpha = .8;
-    this.text = this.add.text(175, 290, "", {fontFamily: "litebulb", color: "black", fontSize: "30px"}).setDepth(100).setScrollFactor(0).setInteractive();
+    this.text = this.add.text(175, 275, "", {fontFamily: "litebulb", color: "black", fontSize: "28px"}).setDepth(100).setScrollFactor(0).setInteractive();
     this.gamePad.dodge.setVisible(true);
     this.gamePad.x = 0;
     this.gamePad.y = 0;
@@ -61,7 +42,7 @@ class map1 extends Phaser.Scene {
       volume: .15
     });
     const map = this.make.tilemap({
-      key: "map1",
+      key: "map6",
       tileWidth: 70,
       tileHeight: 70
     });
@@ -73,13 +54,13 @@ class map1 extends Phaser.Scene {
     const lowerLayer = map.createLayer("lowerLayer", tileset).setDepth(1);
     const npcLayer = map.createLayer("npcLayer", tileset).setVisible(false);
 
-    this.player = this.physics.add.sprite(75 * 70, 75 * 70, "player").setScale(1.5).setDepth(2.01);
+    this.player = this.physics.add.sprite(62 * 70, 47 * 70, "player").setScale(1.5).setDepth(2.01);
     this.player.play("player"+horse+"Idle");
     this.player.body.setSize(this.player.width / 1.5, this.player.height / 2);
     this.player.setImmovable();
     bulletText = this.add.text(-120, -60, "Bullets: " + bullets, {color: "black", fontFamily: "litebulb", fontSize: "28px"}).setDepth(100).setScrollFactor(0);
-    reloadingText = this.add.text(-120, -20, "Reloading", {fontFamily: "litebulb", color: "red", fontSize: "28px"}).setDepth(100).setScrollFactor(0).setVisible(false);
-    bullet = this.physics.add.sprite(0, 0, "bullet").setScale(4).setDepth(3);
+    reloadingText = this.add.text(-120, -20, "Reloading", {fontFamily: "litebulb",color: "red", fontSize: "28px"}).setDepth(100).setScrollFactor(0).setVisible(false);
+    bullet = this.physics.add.sprite(0, 0, "bullet").setScale(2.5).setDepth(2);
     this.cameras.main.startFollow(this.player);
     this.cameras.main.setZoom(.75);
 
@@ -115,8 +96,8 @@ class map1 extends Phaser.Scene {
       loop: true
     })
 		//Timer
-    this.timeText = this.add.text(bulletText.x + 920, bulletText.y + 170, "0 Seconds", {color: "black", fontFamily: "litebulb", fontSize:"21px"}).setDepth(999).setOrigin(0).setScrollFactor(0);
-    this.civilText = this.add.text(bulletText.x + 875, bulletText.y + 200, "0 Civilians Killed", {color: "black", fontFamily: "litebulb", fontSize:"21px"}).setDepth(999).setOrigin(0).setScrollFactor(0);
+		this.timeText = this.add.text(bulletText.x + 920, bulletText.y + 170, "0 Seconds", {color: "black", fontFamily: "litebulb", fontSize:"21px"}).setDepth(999).setOrigin(0).setScrollFactor(0);
+    this.civilText = this.add.text(bulletText.x + 905, bulletText.y + 200, "0 Civilians Killed", {color: "black", fontFamily: "litebulb", fontSize:"21px"}).setDepth(999).setOrigin(0).setScrollFactor(0);
 		this.time.addEvent({delay: 1000,
 			callback: () => {
 				seconds += 1;
@@ -138,28 +119,28 @@ class map1 extends Phaser.Scene {
     var directionNumTarget = Math.floor(Math.random() * 4);
     var targetDirection = directions[directionNumTarget];
     if (targetDirection == "up") {
-      targetSprite.setVelocityY(-100);
+      targetSprite.setVelocityY(-200);
     } else if (targetDirection == "down") {
-      targetSprite.setVelocityY(100);
+      targetSprite.setVelocityY(200);
     } else if (targetDirection == "left") {
-      targetSprite.setVelocityX(-100);
+      targetSprite.setVelocityX(-200);
       targetSprite.flipX = true;
     } else {
-      targetSprite.setVelocityX(100);
+      targetSprite.setVelocityX(200);
       targetSprite.flipX = false;
     };
     this.physics.add.collider(targetSprite, collidableLayer, () => {
       var directionNumTarget = Math.floor(Math.random() * 4);
       var targetDirection = directions[directionNumTarget];
       if (targetDirection == "up") {
-        targetSprite.setVelocityY(-100);
+        targetSprite.setVelocityY(-200);
       } else if (targetDirection == "down") {
-        targetSprite.setVelocityY(100);
+        targetSprite.setVelocityY(200);
       } else if (targetDirection == "left") {
-        targetSprite.setVelocityX(-100);
+        targetSprite.setVelocityX(-200);
         targetSprite.flipX = true;
       } else {
-        targetSprite.setVelocityX(100);
+        targetSprite.setVelocityX(200);
         targetSprite.flipX = false;
       }
     });
@@ -170,13 +151,13 @@ class map1 extends Phaser.Scene {
         var directionNumTarget = Math.floor(Math.random() * 4);
         var targetDirection = directions[directionNumTarget];
         if (targetDirection == "up") {
-          targetSprite.setVelocityY(-100);
+          targetSprite.setVelocityY(-200);
         } else if (targetDirection == "down") {
-          targetSprite.setVelocityY(100);
+          targetSprite.setVelocityY(200);
         } else if (targetDirection == "left") {
-          targetSprite.setVelocityX(-100);
+          targetSprite.setVelocityX(-200);
         } else {
-          targetSprite.setVelocityX(100);
+          targetSprite.setVelocityX(200);
         }
       },
       loop: true
@@ -185,16 +166,15 @@ class map1 extends Phaser.Scene {
       targetOnSight = true;
     });
     //Place NPC's
-    this.randx = (36 + Math.floor(Math.random() * 33)) * 100;
-    this.randy = (36 + Math.floor(Math.random() * 33)) * 100;
+    this.randx = (11 + Math.floor(Math.random() * 77)) * 100;
+    this.randy = (11 + Math.floor(Math.random() * 77)) * 100;
 
     this.directNpc = this.physics.add.sprite(this.randx,this.randy, "blueHat").setScale(1.5).setDepth(2.1).setInteractive();
     this.directNpcNum = Math.floor(Math.random() * 6);
     while (this.directNpcNum == targetNum)
       this.directNpcNum = Math.floor(Math.random() * 6);
     this.directNpc.setTexture(characters[this.directNpcNum]);
-    this.directNpc.on("pointerdown", () => {
-      this.directNpc.play(characters[this.directNpcNum]+"Walk");
+    this.directNpc.on("pointerdown", () => { 
       this.textBox.setVisible(true);
       this.text.text = "You: Hey you! Have you seen this guy around?\n" + "Kind Stranger: Follow me, I know exactly\nwhere to find him."
 
@@ -237,8 +217,8 @@ class map1 extends Phaser.Scene {
         this.directNpc.flipX = false;
       };
     });
-    this.randx = (36 + Math.floor(Math.random() * 33)) * 100;
-    this.randy = (36 + Math.floor(Math.random() * 33)) * 100;
+    this.randx = (11 + Math.floor(Math.random() * 77)) * 100;
+    this.randy = (11 + Math.floor(Math.random() * 77)) * 100;
 
     this.hostileNpc = this.physics.add.sprite(this.randx,this.randy, "blueHat").setScale(1.5).setDepth(2.1).setInteractive();
     this.hostileNpcNum = Math.floor(Math.random() * 6);
@@ -254,37 +234,46 @@ class map1 extends Phaser.Scene {
       this.attackNpc = this.time.addEvent({
         delay: 3000,
         callback:() =>{
-          if(this.hostileNpc != undefined){
-            this.hostileNpc.play(characters[this.hostileNpcNum]+"Shoot");
-            this.time.addEvent({
-              delay: 200,
-              callback:() =>{
-                this.hostileNpc.play(characters[this.hostileNpcNum]+"Walk");
-              }
-            })
-            if(this.player.x < this.hostileNpc.x)
-              this.hostileNpc.setVelocityX(-150);
-            else
-              this.hostileNpc.setVelocityX(150);
+          this.hostileNpc.play(characters[this.hostileNpcNum]+"Shoot");
+          this.time.addEvent({
+            delay: 200,
+            callback:() =>{
+              this.hostileNpc.play(characters[this.hostileNpcNum]+"Walk");
+            }
+          })
+          if(this.player.x < this.hostileNpc.x)
+            this.hostileNpc.setVelocityX(-150);
+          else
+            this.hostileNpc.setVelocityX(150);
 
-            if(this.player.y < this.hostileNpc.y)
-              this.hostileNpc.setVelocityY(-150);
-            else
-              this.hostileNpc.setVelocityY(150);
+          if(this.player.y < this.hostileNpc.y)
+            this.hostileNpc.setVelocityY(-150);
+          else
+            this.hostileNpc.setVelocityY(150);
 
-            var hostileBullet = this.physics.add.sprite(this.hostileNpc.x, this.hostileNpc.y, "bullet").setScale(4).setDepth(3);
-            hostileBullet.setBounce(1);
-            this.physics.add.collider(hostileBullet, collidableLayer, () => {hostileBullet.destroy()});
-            this.physics.moveTo(hostileBullet, this.player.x, this.player.y, 500);
-            this.physics.add.collider(this.player, hostileBullet, ()=>{
-              hostileBullet.destroy();
-              localStorage.clear();
-              window.location.reload();
-            });
-            this.sound.play("shoot", {volume:.1});
-          }
+          var hostileBullet = this.physics.add.sprite(this.hostileNpc.x, this.hostileNpc.y, "bullet").setScale(4).setDepth(3);
+		      hostileBullet.setBounce(1);
+          this.physics.add.collider(hostileBullet, collidableLayer, () => {hostileBullet.destroy()});
+          this.physics.moveTo(hostileBullet, this.player.x, this.player.y, 500);
+		  		this.physics.add.collider(this.player, hostileBullet, ()=>{
+			  		hostileBullet.destroy();
+				  	this.scene.start("map1");
+  				});
+	  			this.sound.play("shoot", {volume:.1});
         },loop: true
       });
+      this.time.addEvent({
+        delay: 2000,
+        callback:() =>{
+          this.attackNpc.paused = true;
+          this.time.addEvent({
+            delay: 1000,
+            callback:() =>{
+              this.attackNpc.paused = false;
+            }
+          })
+        }, loop: true
+      })
     });
     this.physics.add.collider(this.hostileNpc, collidableLayer);
     this.physics.add.collider(this.hostileNpc, bulletNpcCollider, () => {this.hostileNpc.destroy(); seconds = 0;});
@@ -303,12 +292,8 @@ class map1 extends Phaser.Scene {
 			this.physics.add.collider(npcSprite, bulletNpcCollider, () => {
         randomDirChange.paused = true;
         this.npcInBorder.paused = true;
-        npcSprite.setVisible(false);
-        npcSprite.setActive(false);
         npcSprite.destroy();
-			  //npcSprite.x = -99999;
-			  //npcSprite.y = 99999;
-			  civilianKills += 1;
+				civilianKills += 1;
       }, null, this);
       this.time.addEvent({
         delay: 30000,
@@ -317,9 +302,7 @@ class map1 extends Phaser.Scene {
           this.npcInBorder.paused = true;
           npcSprite.setVisible(false);
           npcSprite.setActive(false);
-					npcSprite.x = 9999;
-					npcSprite.y = 9999;
-				},
+        },
         loop: true,
         paused: false
       });
@@ -329,14 +312,14 @@ class map1 extends Phaser.Scene {
       var directionNum = Math.floor(Math.random() * 4);
       var npcDirection = directions[directionNum];
       if (npcDirection == "up") {
-        npcSprite.setVelocityY(-100);
+        npcSprite.setVelocityY(-200);
       } else if (npcDirection == "down") {
-        npcSprite.setVelocityY(100);
+        npcSprite.setVelocityY(200);
       } else if (npcDirection == "left") {
-        npcSprite.setVelocityX(-100);
+        npcSprite.setVelocityX(-200);
         npcSprite.flipX = true;
       } else {
-        npcSprite.setVelocityX(100);
+        npcSprite.setVelocityX(200);
         npcSprite.flipX = false;
       };
       this.physics.add.collider(npcSprite, this.player, () => {
@@ -376,9 +359,9 @@ class map1 extends Phaser.Scene {
             directionAnswer = "Oh god! I saw him right around here!";
 
           if (clicked == false) {
+            clicked = true;
             this.textBox.setVisible(true);
             this.text.text = "You: Hey you! Have you seen this guy around?\n" + "Kind Stranger : " + directionAnswer + ".";
-            clicked = true;
           }
         })
       })
@@ -387,31 +370,31 @@ class map1 extends Phaser.Scene {
        	var directionNum = Math.floor(Math.random() * 4);
         var npcDirection = directions[directionNum];
         if (npcDirection == "up") {
-          npcSprite.setVelocityY(-100);
+          npcSprite.setVelocityY(-200);
         } else if (npcDirection == "down") {
-          npcSprite.setVelocityY(100);
+          npcSprite.setVelocityY(200);
         } else if (npcDirection == "left") {
-          npcSprite.setVelocityX(-100);
+          npcSprite.setVelocityX(-200);
           npcSprite.flipX = true;
         } else {
-          npcSprite.setVelocityX(100);
+          npcSprite.setVelocityX(200);
           npcSprite.flipX = false;
         }
       });
       this.npcInBorder = this.time.addEvent({
         delay: 500,
         callback: () => {
-          if (npcSprite.x < 65 * 70) {
+          if (npcSprite.x < 30 * 70) {
             npcSprite.setVelocityX(400);
             npcSprite.flipX = false;
           }
-          if (npcSprite.x > 85 * 70) {
+          if (npcSprite.x > 100 * 70) {
             npcSprite.setVelocityX(-400);
             npcSprite.flipX = true;
           };
-          if (npcSprite.y < 65 * 70)
+          if (npcSprite.y < 30 * 70)
             npcSprite.setVelocityY(400)
-          if (npcSprite.y > 85 * 70)
+          if (npcSprite.y > 100 * 70)
             npcSprite.setVelocityY(-400);
         },
         loop: true
@@ -423,13 +406,13 @@ class map1 extends Phaser.Scene {
           var directionNum = Math.floor(Math.random() * 4);
           var npcDirection = directions[directionNum];
           if (npcDirection == "up") {
-            npcSprite.setVelocityY(-100);
+            npcSprite.setVelocityY(-200);
           } else if (npcDirection == "down") {
-            npcSprite.setVelocityY(100);
+            npcSprite.setVelocityY(200);
           } else if (npcDirection == "left") {
-            npcSprite.setVelocityX(-100);
+            npcSprite.setVelocityX(-200);
           } else {
-            npcSprite.setVelocityX(100);
+            npcSprite.setVelocityX(200);
           }
         },
         loop: true
@@ -437,23 +420,23 @@ class map1 extends Phaser.Scene {
     }, null, this);
   };
   update() {
-    if (this.player.x < 50 * 70)
-      this.player.x = 100 * 70;
-    if (this.player.x > 100 * 70)
-      this.player.x = 50 * 70;
-    if (this.player.y < 50 * 70)
-      this.player.y = 100 * 70;
-    if (this.player.y > 100 * 70)
-      this.player.y = 50 * 70;
+    if (this.player.x < 15 * 70)
+      this.player.x = 225 * 70;
+    if (this.player.x > 225 * 70)
+      this.player.x = 15 * 70;
+    if (this.player.y < 15 * 70)
+      this.player.y = 225 * 70;
+    if (this.player.y > 225 * 70)
+      this.player.y = 15 * 70;
 
-    if (targetSprite.x < 50 * 70)
-      targetSprite.x = 100 * 70;
-    if (targetSprite.x > 100 * 70)
-      targetSprite.x = 50 * 70;
-    if (targetSprite.y < 50 * 70)
-      targetSprite.y = 100 * 70;
-    if (targetSprite.y > 100 * 70)
-      targetSprite.y = 50 * 70;
+    if (targetSprite.x < 15 * 70)
+      targetSprite.x = 225 * 70;
+    if (targetSprite.x > 225 * 70)
+      targetSprite.x = 15 * 70;
+    if (targetSprite.y < 15 * 70)
+      targetSprite.y = 225 * 70;
+    if (targetSprite.y > 225 * 70)
+      targetSprite.y = 15 * 70;
 
     if (this.player.flipX == true)
       this.playerBulletCollider.setOffset(-12, -56);
@@ -463,11 +446,7 @@ class map1 extends Phaser.Scene {
     if (mouse.isDown && gunDrawn == true && fired == false) {
       if (bullet != undefined)
         bullet.destroy();
-      bullet = this.physics.add.sprite(this.player.x, this.player.y, "bullet").setScale(4).setDepth(3);
-      if(this.player.flipX == true)
-        bullet.x = bullet.x - 25;
-      else
-        bullet.x = bullet.x + 50;
+      bullet = this.physics.add.sprite(this.player.x, this.player.y, "bullet").setScale(2.5).setDepth(2);
       this.autoBulletDestroyer = this.time.addEvent({
         delay: 3000,
         callback:() =>{
@@ -483,65 +462,64 @@ class map1 extends Phaser.Scene {
 				switch (Math.floor(score/10)){
 					case 10:
 						rank = "S+";
-            money += 250;
-            localStorage.setItem("money", 150);
-						break
+						break;
+            this.newMoney = parseInt(parseInt(localStorage.getItem("money")) + 600);
+            localStorage.setItem("money", this.newMoney);
 					case 9:
 						rank = "S";
-            money += 200;
-            localStorage.setItem("money", 100);
 						break;
+            this.newMoney = parseInt(parseInt(localStorage.getItem("money")) + 500);
+            localStorage.setItem("money", this.newMoney);
 					case 8:
 						rank = "A+";
-            money += 150;
-            localStorage.setItem("money", 85);
 						break;
+            this.newMoney = parseInt(parseInt(localStorage.getItem("money")) + 400);
+            localStorage.setItem("money", this.newMoney);
 					case 7:
 						rank = "A";
-            money += 100;
-            localStorage.setItem("money", 70);
 						break;
+            this.newMoney = parseInt(parseInt(localStorage.getItem("money")) + 300);
+            localStorage.setItem("money", this.newMoney);
 					case 6:
 						rank = "B+";
-            money += 75;
-            localStorage.setItem("money", 55);
 						break;
+            this.newMoney = parseInt(parseInt(localStorage.getItem("money")) + 200);
+            localStorage.setItem("money", this.newMoney);
 					case 5:
 						rank = "B";
-            money += 50;
-            localStorage.setItem("money", 40);
 						break;
+            this.newMoney = parseInt(parseInt(localStorage.getItem("money")) + 150);
+            localStorage.setItem("money", this.newMoney);
 					case 4:
 						rank = "C";
-            money += 40;
-            localStorage.setItem("money", 25);
 						break;
+            this.newMoney = parseInt(parseInt(localStorage.getItem("money")) + 100);
+            localStorage.setItem("money",this.newMoney);
 					case 3:
 						rank = "D";
-            money += 30;
-            localStorage.setItem("money", 10);
 						break;
+            this.newMoney = parseInt(parseInt(localStorage.getItem("money")) + 60);
+            localStorage.setItem("money",this.newMoney);
 					case 2:
 						rank = "E";
-            money += 20;
-            localStorage.setItem("money", 20);
 						break;
+            this.newMoney = parseInt(parseInt(localStorage.getItem("money")) + 40);
+            localStorage.setItem("money",this.newMoney);
 					case 1:
 						rank = "F";
-            money += 10;
-            localStorage.setItem("money", 5);
 						break;
+            this.newMoney = parseInt(parseInt(localStorage.getItem("money")) + 20);
+            localStorage.setItem("money",this.newMoney);
 					default:
 						rank = "F";
-            money += 10;
-            localStorage.setItem("money", 5);
+            this.newMoney = parseInt(parseInt(localStorage.getItem("money")) + 20);
+            localStorage.setItem("money",this.newMoney);
 				};
         if(localStorage.getItem("bountyHunted") == false){
           localStorage.setItem("bountyHunted", true);
           this.scene.start("duelBoss");
         }
 				this.scene.start("scoreboard");
-        localStorage.setItem("bounty", null);
       });
       bullet.setBounce(1);
       var bulletX, bulletY;
@@ -559,7 +537,7 @@ class map1 extends Phaser.Scene {
       fired = true;
       bullets = bullets - 1;
       bulletText.destroy();
-      bulletText = this.add.text(-120, -60, "Bullets: " + bullets, {color: "black", fontFamily: "litebulb", fontSize: "28px"}).setDepth(100).setScrollFactor(0);
+      bulletText = this.add.text(-120, -60, "Bullets: " + bullets, {color: "black", fontFamily: "litebulb", fontSize: "14px"}).setDepth(100).setScrollFactor(0);
       if (bullets >= 1) {
         this.sound.play("shoot", {
           volume: .1
@@ -582,7 +560,7 @@ class map1 extends Phaser.Scene {
             fired = false;
             reloadingText.setVisible(false)
 						bulletText.destroy();
-            bulletText = this.add.text(-120, -60, "Bullets: " + bullets, {color: "black", fontFamily: "litebulb", fontSize: "28px"}).setDepth(100).setScrollFactor(0);
+            bulletText = this.add.text(-120, -60, "Bullets: " + bullets, {color: "black", fontFamily: "litebulb", fontSize: "14px"}).setDepth(100).setScrollFactor(0);
 					}
         })
       }
@@ -597,25 +575,10 @@ class map1 extends Phaser.Scene {
   }
   targetCombat() {
     //shoot once
-    var enemyBullet = this.physics.add.sprite(targetSprite.x, targetSprite.y, "bullet").setScale(4).setDepth(3);
-    var hostileBullet = this.physics.add.sprite(targetSprite.x, targetSprite.y, "bullet").setScale(4).setDepth(3);
+    var enemyBullet = this.physics.add.sprite(targetSprite.x, targetSprite.y, "bullet").setScale(2.5).setDepth(2);
     this.physics.add.collider(enemyBullet, collidableLayer);
-    this.physics.add.collider(hostileBullet, collidableLayer);
-		this.physics.add.collider(this.player, hostileBullet, ()=>{
-			hostileBullet.destroy();
-      localStorage.clear();
-      window.location.reload();
-		});
-    this.physics.add.collider(this.player, enemyBullet, ()=>{
-			enemyBullet.destroy();
-      localStorage.clear();
-      window.location.reload();
-		});
-		this.sound.play("shoot", {volume:.1});
 		enemyBullet.setBounce(1);
-		hostileBullet.setBounce(1);
 		this.physics.moveTo(enemyBullet, this.player.x, this.player.y, 500);
-		this.physics.moveTo(hostileBullet, this.player.x, this.player.y, 500);
     targetSprite.setVelocity(0);
     targetSprite.play(target + "Shoot");
     firstEnemyShot = true;
@@ -625,20 +588,20 @@ class map1 extends Phaser.Scene {
       callback: () => {
 				targetSprite.play(target + "Walk");
         if (this.player.x - targetSprite.x < 0 && targetSprite.x < 100 * 70)
-          targetSprite.setVelocityX(100);
+          targetSprite.setVelocityX(200);
         else
-          targetSprite.setVelocityX(-200);
+          targetSprite.setVelocityX(-400);
         if (this.player.x - targetSprite.x > 0 && targetSprite.x > 50 * 70)
-          targetSprite.setVelocityX(-100);
+          targetSprite.setVelocityX(-200);
         else
           targetSprite.setVelocityX(400);
 
         if (this.player.y - targetSprite.y < 0 && targetSprite.y < 100 * 70)
-          targetSprite.setVelocityY(100);
+          targetSprite.setVelocityY(200);
         else
-          targetSprite.setVelocityY(-200);
+          targetSprite.setVelocityY(-400);
         if (this.player.y - targetSprite.y > 0 && targetSprite.y > 50 * 70)
-          targetSprite.setVelocityY(-100);
+          targetSprite.setVelocityY(-200);
         else
           targetSprite.setVelocityY(400);
 
@@ -657,14 +620,11 @@ class map1 extends Phaser.Scene {
         this.onTheRun.paused = true;
         targetSprite.setVelocity(0);
         targetSprite.play(target + "Shoot");
-        var enemyBullet = this.physics.add.sprite(targetSprite.x, targetSprite.y, "bullet").setScale(4).setDepth(3);
-				this.physics.add.collider(enemyBullet, collidableLayer);
+        var enemyBullet = this.physics.add.sprite(targetSprite.x, targetSprite.y, "bullet").setScale(2.5).setDepth(2);
         this.physics.moveTo(enemyBullet, this.player.x, this.player.y, 500);
 				this.physics.add.collider(this.player, enemyBullet, ()=>{
 					enemyBullet.destroy();
-          localStorage.setItem("bounty", null);
-          localStorage.clear();
-          window.location.reload();
+					this.scene.start("map6");
 				});
 				this.sound.play("shoot", {volume:.1});
 				if (Math.abs(targetSprite.x - this.player.x) < 250 && Math.abs(targetSprite.y - this.player.y) < 250) {
@@ -686,7 +646,7 @@ class map1 extends Phaser.Scene {
   up() {
     gunDrawn = false;
     this.player.play("player"+horse+"Walk");
-    this.player.setVelocityY(-speed);
+    this.player.setVelocityY(-200);
     this.playerBulletCollider.setVelocityY(-200);
     this.npcSpawner.setVelocityY(-200);
     this.textBox.setVisible(false);
@@ -695,34 +655,33 @@ class map1 extends Phaser.Scene {
   down() {
     gunDrawn = false;
     this.player.play("player"+horse+"Walk");
-    this.player.setVelocityY(speed);
+    this.player.setVelocityY(200);
     this.playerBulletCollider.setVelocityY(200);
     this.npcSpawner.setVelocityY(200);
     this.textBox.setVisible(false);
     this.text.text = "";
-}
+  }
   left() {
     gunDrawn = false;
     this.player.play("player"+horse+"Walk");
-    this.player.setVelocityX(-speed);
+    this.player.setVelocityX(-200);
     this.player.flipX = true;
     this.player.body.setOffset(0, 62);
     this.playerBulletCollider.setVelocityX(-200);
     this.npcSpawner.setVelocityX(-200);
     this.textBox.setVisible(false);
     this.text.text = "";
-}
+  }
   right() {
     gunDrawn = false;
     this.player.play("player"+horse+"Walk");
-    this.player.setVelocityX(speed);
+    this.player.setVelocityX(200);
     this.player.flipX = false;
     this.player.body.setOffset(12, 62);
     this.playerBulletCollider.setVelocityX(200);
     this.npcSpawner.setVelocityX(200);
     this.textBox.setVisible(false);
     this.text.text = "";
-
   }
   release() {
     this.player.setVelocity(0);
