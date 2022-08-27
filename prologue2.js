@@ -11,7 +11,7 @@ class prologue2 extends Phaser.Scene {
       callback:() =>{
         this.filter3.alpha -= .01;
       },repeat: 100
-    })
+    });
     this.emitter = EventDispatcher.getInstance();
     const map = this.make.tilemap({
       key: "home",

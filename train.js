@@ -45,6 +45,7 @@ class train extends Phaser.Scene{
         this.player.setVelocity(200,-200);
       
       if(this.punching){
+        this.sound.play("fatherHuuh");
         if(this.blondie.flipX)
           this.blondie.setVelocity(500, -500);
         else
@@ -126,6 +127,10 @@ class train extends Phaser.Scene{
     this.filter.x = this.player.x;
     this.filter.y = this.player.y;
 
+    if(this.blondie.y>500){
+      localStorage.setItem("location", "seqTrain");
+      this.scene.start("seqTrain");
+    }
     if(this.player.y>350)
       this.scene.start("train")
 
