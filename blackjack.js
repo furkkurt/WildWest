@@ -60,6 +60,14 @@ class blackjack extends Phaser.Scene{
       this.card = this.symbol + this.num;
     }
     deck.push(this.card);
+    if((deck.includes("cA") && deck.includes("sA")) && (deck.includes("c8") && deck.includes("s8"))){
+        if(deck == this.playerHand){
+            //draw against death
+        }
+        else{
+            //bar fight
+        }
+    }
 
     if(this.numbers.indexOf(this.num)<9)
       this.value = parseInt(this.num);
