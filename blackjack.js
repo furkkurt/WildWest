@@ -61,12 +61,21 @@ class blackjack extends Phaser.Scene{
     }
     deck.push(this.card);
     if((deck.includes("cA") && deck.includes("sA")) && (deck.includes("c8") && deck.includes("s8"))){
-        if(deck == this.playerHand){
-            //draw against death
+      this.againBut.visible = this.hitBut.visible = this.standBut.visible = this.quitBut.visible = this.hitText.visible = this.standText.visible = this.quitText.visible = this.againText.visible = false;
+      this.filter = this.add.sprite(0,0,"blackFilter").setOrigin(0).setScale(100).setDepth(999);
+      this.filter.alpha = 0;
+      this.time.addEvent({
+        delay: 10,
+        callback:() =>{
+          this.filter.alpha += .01;
+        },repeat: 100
+      });
+      this.time.addEvent({
+        delay: 1000,
+        callback:() =>{
+          this.scene.start("againstDead");
         }
-        else{
-            //bar fight
-        }
+      })
     }
 
     if(this.numbers.indexOf(this.num)<9)
