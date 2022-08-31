@@ -166,6 +166,7 @@ class preloader extends Phaser.Scene {
 		this.load.image("momOld", "assets/momOld.png");
 		this.load.atlas("manco", "assets/manco.png", "assets/manco.json");
 		this.load.atlas("blondie", "assets/blondie.png", "assets/blondie.json");
+		this.load.atlas("hickok", "assets/hickok.png", "assets/hickok.json");
 	};
 	create(){
 		this.anims.create({key:"playerIdle", frameRate:1,frames:[{key:"player",frame:"1"}],repeat:0});
@@ -368,6 +369,6 @@ class preloader extends Phaser.Scene {
 		else if(localStorage.getItem("location") == "bridge")
 			this.scene.start("seqTrain");
 		else
-			this.scene.start("town");
+			this.scene.start("againstDead");
 	}
 }
